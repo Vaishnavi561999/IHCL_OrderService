@@ -1,0 +1,56 @@
+env:
+ databaseName: "IHCLPTDataBase"
+ connectionString : "mongodb://ihclptadmin:XZhEFKO2QXZHatP7334yEQGcVefwyRFLh5oR7wPi0fxipVB2QiEHy9mpeo2QeT1fw97VG5uJipjgACDb0poJfQ==@ihclptadmin.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@ihclptadmin"
+ PAYMENT_SERVICE_HOST: "http://ihcl-paymentservice:8083"
+ LOYALTY_SERVICE_HOST: "http://ihcl-loyalty:8084"
+ HUDINI_SERVICE_HOST: "http://ihcl-hudiniservice:8085"
+ SSO_SERVICE_HOST: "http://ihcl-sso:3001"
+ CART_SERVICE_HOST: "http://ihcl-cartservice:8081"
+ SANITY_HOST: "https://ocl5w36p.api.sanity.io/v2022-03-07/data/query/preprod"
+ memberShipPlanURL: "http://ihcl-loyalty:8084/v1/gravty/entity-data/members/membership_plan/"
+ memberLookupValidationURL: "http://ihcl-loyalty:8084/v1/gravty/members/list/?mobile"
+ memberEnrollmentURL: "http://ihcl-loyalty:8084/v1/gravty/members"
+ orderIdBooking : "PWeb"
+ orderIdEpicure : "PEpic"
+ orderIdTEGC : "PTEGC"
+ redisKey: "vzaLORNA7cO9HjIDYg32CTqElV6CzGziDAzCaGRlwCY"
+ redisHost: "app-dev-redis.redis.cache.windows.net"
+ redisPort: "6380"
+ pastBookings: "1"
+ upcomingBookings: "1"
+ nonDepositRoomCommitBooking: "1"
+ timeSecondsOfTTL: 600
+ membershipSource: "selected"
+ requestTimeoutMillis: "120000"
+ connectionPoolMinSize: 200
+ connectionPoolMaxSize: 200
+ bookingRetryCount: 3
+ pendingBookingsForDuration: 30
+ tenMinAgoPendingOrders: 10
+ twoDaysAgoPendingOrders: 2
+
+ dataEncryptionAndDecryptionKey: "1a2b3c4d5e6f7g8h"
+ twoMinAgoPendingOrders : 2
+ APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=66e000d8-fffd-4ab5-ad33-b475a974844f;IngestionEndpoint=https://centralindia-0.in.applicationinsights.azure.com/;LiveEndpoint=https://centralindia.livediagnostics.monitor.azure.com/"
+
+cron:
+  ordercron: true
+  api_ordercron: "http://ihcl-orderservice:8086/v1/orders/update-processing-gc"
+  updateconfirmorder: true
+  api_updateconfirmorder: "http://ihcl-orderservice:8086/v1/orders/update-confirm-order"
+  tegcepciurecron: true
+  api_tegcepciurecron: "http://ihcl-orderservice:8086/v1/orders/cron-tegc-epicure"
+resources:
+ limits:
+  #cpu: 1000m
+  memory: 1024Mi
+ requests:
+   #cpu: 500m
+   memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 70
